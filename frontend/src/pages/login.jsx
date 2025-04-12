@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
-
-let users = {
-  user1: { username: "username", password: "password", role: "admin" },
-  user2: { username: "username2", password: "password2", role: "inspector" },
-  user3: { username: "username3", password: "password3", role: "electrician" },
-  user4: { username: "username4", password: "password4", role: "plumber" }
-};
+import { useNavigate } from 'react-router-dom';
+import './login.css';
 
 const Login = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let isAuthenticated = false;
 
+    // Simulated user data
+    const users = {
+      admin: { username: "admin@example.com", password: "admin123", role: "admin" },
+      inspector: { username: "inspector@example.com", password: "inspector123", role: "inspector" },
+      electrician: { username: "electrician@example.com", password: "electrician123", role: "electrician" },
+      plumber: { username: "plumber@example.com", password: "plumber123", role: "plumber" },
+    };
+
     for (let key in users) {
       if (users[key].username === email && users[key].password === password) {
         isAuthenticated = true;
-        onLoginSuccess(`Login successful!`, users[key].username);
+        const role = users[key].role;
+
+        onLoginSuccess(`Login successful!`, role);
+
+        // Role-based redirection
+        if (role === "inspector") {
+          navigate('/dashboard');
+        } else if (role === "admin") {
+          navigate('/admin');
+        } else if (role === "electrician" || role === "plumber") {
+          navigate('/maintenance');
+        }
         break;
       }
     }
@@ -30,30 +45,46 @@ const Login = ({ onLoginSuccess }) => {
 
   return (
     <div className="login-container">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <div className="login-text">
+        <h1>Login</h1>
+      </div>
+      <div className="login-form">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              id="email"
+              className="rounded-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              className="rounded-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="login-button">Login</button>
+        </form>
+        {/* Display user credentials for testing */}
+        <div className="test-credentials">
+          <h3>Test Credentials:</h3>
+          <ul>
+            <li>Admin: admin@example.com / admin123</li>
+            <li>Inspector: inspector@example.com / inspector123</li>
+            <li>Electrician: electrician@example.com / electrician123</li>
+            <li>Plumber: plumber@example.com / plumber123</li>
+          </ul>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+      </div>
     </div>
   );
 };
