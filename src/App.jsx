@@ -34,7 +34,7 @@ function App() {
           />
           <Route
             path="/admin"
-            element={role === 'AdminDashboard' ? <Admin /> : <Navigate to="/login" replace />}
+            element={role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" replace />}
           />
           <Route
             path="/inspector"
