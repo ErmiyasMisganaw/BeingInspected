@@ -1,4 +1,6 @@
 {
   "name": "smart-inspection-app",
-  "dependencies": {}
+  "dependencies": {
+    "firebase": "^11.6.0"
+  }
 }
