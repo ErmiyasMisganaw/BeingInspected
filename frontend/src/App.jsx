@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import './App.css';
 import Login from './pages/login';
 import MaintenancePage from './pages/maintenance';
-import Admin from './pages/admin';
+import AdminDashboard from './pages/admin';
 import Inspector from './pages/inspector';
 import Dashboard from './pages/dashboard'; // Import Dashboard component
 import { useState } from 'react';
@@ -34,7 +34,7 @@ function App() {
           />
           <Route
             path="/admin"
-            element={role === 'admin' ? <Admin /> : <Navigate to="/login" replace />}
+            element={role === 'AdminDashboard' ? <Admin /> : <Navigate to="/login" replace />}
           />
           <Route
             path="/inspector"

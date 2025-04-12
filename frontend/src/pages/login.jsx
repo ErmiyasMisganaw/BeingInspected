@@ -75,7 +75,7 @@ const Login = ({ onLoginSuccess }) => {
           <button type="submit" className="login-button">Login</button>
         </form>
         {/* Display user credentials for testing */}
-        <div className="test-credentials">
+        <div className="test-credentials" style={{ color: 'black' }}>
           <h3>Test Credentials:</h3>
           <ul>
             <li>Admin: admin@example.com / admin123</li>
