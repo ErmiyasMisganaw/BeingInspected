@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 
-const Login = () => {
+let users = {
+  user1: { username: "username", password: "password", role: "admin" },
+  user2: { username: "username2", password: "password2", role: "inspector" },
+  user3: { username: "username3", password: "password3", role: "electrician" },
+  user4: { username: "username4", password: "password4", role: "plumber" }
+};
+
+const Login = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Email:', email, 'Password:', password);
+    let isAuthenticated = false;
+
+    for (let key in users) {
+      if (users[key].username === email && users[key].password === password) {
+        isAuthenticated = true;
+        onLoginSuccess(`Login successful!`, users[key].username);
+        break;
+      }
+    }
+
+    if (!isAuthenticated) {
+      alert('Invalid username or password');
+    }
   };
 
   return (
@@ -15,7 +33,7 @@ const Login = () => {
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label>Email:</label>
           <input
             type="email"
             id="email"
